@@ -1,33 +1,29 @@
-// Пример базовой регистрации и входа
-const users = [];
-
-function register() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-    
-    users.push({ username, password });
-    
-    // Очистка формы
-    document.getElementById("username").value = "";
-    document.getElementById("password").value = "";
+// Получение имени пользователя из localStorage
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+const usernameElement = document.getElementById("username");
+if (currentUser) {
+    usernameElement.textContent = currentUser.username;
+} else {
+    // Если пользователь не вошел, перенаправляем его на страницу входа
+    window.location.href = "index.html";
 }
 
-function login() {
-    const loginUsername = document.getElementById("loginUsername").value;
-    const loginPassword = document.getElementById("loginPassword").value;
+const chatMessages = document.getElementById("chat-messages");
+const messageInput = document.getElementById("message");
+const sendButton = document.getElementById("send");
+
+// Обработка отправки сообщения
+sendButton.addEventListener("click", sendMessage);
+
+function sendMessage() {
+    const messageText = messageInput.value;
     
-    const user = users.find(u => u.username === loginUsername && u.password === loginPassword);
-    
-    if (user) {
-        // Вход успешен
-        document.getElementById("message").innerHTML = "Вход выполнен. Переход на домашнюю страницу...";
+    if (messageText.trim() !== "") {
+        const messageElement = document.createElement("p");
+        messageElement.textContent = currentUser.username + ": " + messageText;
+        chatMessages.appendChild(messageElement);
         
-        // Сохранение пользователя в localStorage
-        localStorage.setItem("currentUser", JSON.stringify(user));
-        
-        // Перенаправление на страницу home.html (предположим, такая страница существует)
-        window.location.href = "home.html";
-    } else {
-        document.getElementById("message").innerHTML = "Пользователь не найден. Попробуйте снова.";
+        // Очищаем поле ввода
+        messageInput.value = "";
     }
 }
