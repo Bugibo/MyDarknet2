@@ -12,18 +12,50 @@ const chatMessages = document.getElementById("chat-messages");
 const messageInput = document.getElementById("message");
 const sendButton = document.getElementById("send");
 
-// Обработка отправки сообщения
-sendButton.addEventListener("click", sendMessage);
+// Функция для отправки сообщения на сервер (заглушка, требуется серверная часть)
+function sendMessageToServer(message) {
+    // Здесь должен быть код для отправки сообщения на сервер
+}
 
-function sendMessage() {
+// Функция для отображения сообщения на странице
+function displayMessage(username, messageText) {
+    const messageElement = document.createElement("p");
+    messageElement.textContent = username + ": " + messageText;
+    chatMessages.appendChild(messageElement);
+}
+
+// Обработка отправки сообщения
+sendButton.addEventListener("click", () => {
     const messageText = messageInput.value;
     
     if (messageText.trim() !== "") {
-        const messageElement = document.createElement("p");
-        messageElement.textContent = currentUser.username + ": " + messageText;
-        chatMessages.appendChild(messageElement);
+        // Отправляем сообщение на сервер
+        sendMessageToServer({
+            username: currentUser.username,
+            message: messageText
+        });
+        
+        // Отображаем сообщение на странице
+        displayMessage(currentUser.username, messageText);
         
         // Очищаем поле ввода
         messageInput.value = "";
     }
+});
+
+// Функция для отображения сообщений полученных с сервера (заглушка)
+function receiveMessagesFromServer() {
+    // Здесь должен быть код для получения сообщений с сервера и отображения их на странице
+    // Пример получения сообщений с сервера:
+    const messages = [
+        { username: "User1", message: "Привет!" },
+        { username: "User2", message: "Привет, User1!" },
+    ];
+
+    messages.forEach((message) => {
+        displayMessage(message.username, message.message);
+    });
 }
+
+// Получаем и отображаем сообщения с сервера (вызывается при загрузке страницы)
+receiveMessagesFromServer();
