@@ -1,26 +1,27 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // Получаем текущего пользователя из localStorage
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    
-    if (currentUser) {
-        // Отображаем имя текущего пользователя
-        document.getElementById("username").textContent = currentUser.username;
-    } else {
-        // Если текущего пользователя нет, перенаправляем на страницу входа
-        window.location.href = "index.html";
-    }
-});
+// Получение имени пользователя из localStorage
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+const usernameElement = document.getElementById("username");
+if (currentUser) {
+    usernameElement.textContent = currentUser.username;
+} else {
+    // Если пользователь не вошел, перенаправляем его на страницу входа
+    window.location.href = "index.html";
+}
+
+const chatMessages = document.getElementById("chat-messages");
+const messageInput = document.getElementById("message");
+const sendButton = document.getElementById("send");
+
+// Обработка отправки сообщения
+sendButton.addEventListener("click", sendMessage);
 
 function sendMessage() {
-    const messageInput = document.getElementById("messageInput");
-    const message = messageInput.value;
+    const messageText = messageInput.value;
     
-    if (message) {
-        // Создаем элемент для сообщения и добавляем его в чат
-        const chat = document.getElementById("chat");
-        const messageElement = document.createElement("div");
-        messageElement.textContent = message;
-        chat.appendChild(messageElement);
+    if (messageText.trim() !== "") {
+        const messageElement = document.createElement("p");
+        messageElement.textContent = currentUser.username + ": " + messageText;
+        chatMessages.appendChild(messageElement);
         
         // Очищаем поле ввода
         messageInput.value = "";
