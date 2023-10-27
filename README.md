@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Регистрация и вход</title>
+    <title>MyDarknet2 Registration and login</title>
+    <meta name="google-site-verification" content="dq0_n6xUf9XgnjNIsmugNH2kRjcCkLbeddKEld0bCOw" />
 </head>
 <body>
     <h1>Регистрация</h1>
